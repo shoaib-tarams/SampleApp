@@ -8,7 +8,7 @@ Self-Service Sample Application with Java REST server, MySQL database and Node.j
 	```docker-compose up -d```
 1. Now your containers are started. Check your running containers by command `docker ps`. 
 * Instrument Java, DB and Machine agents then start Java REST API
-	``` docker exec -it rest install-appdynamics <controller-url> <controller-port> <account-name> <access-key>; docker exec rest start-all```
+	``` docker exec -it rest install-appdynamics <controller-url> <controller-port> <account-name> <access-key> <email-id> <password>; docker exec rest start-all```
 * Instrument Node.js agent and start web service
 	``` docker exec -it web install-appdynamics <controller-url> <controller-port> <account-name> <access-key>; docker exec web start```
 

@@ -28,6 +28,8 @@ APPD_CONTROLLER=$1
 APPD_PORT=$2
 APPD_ACCOUNT_NAME=$3
 APPD_ACCESS_KEY=$4
+MYUSERNAME=$5
+MYPASSWORD=$6
 APPD_SSL="false"
 APPD_APP_NAME="SampleApp"
 APPD_TIER_NAME="RestServices"
@@ -43,28 +45,20 @@ checkSSL() {
 }
 
 downloadInstallers() {
-  echo "Please enter your AppDynamics Portal login to download Agents"
-  echo -n "Email ID/UserName: "
-  read USER_NAME
-
-  stty -echo
-  echo -n "Password: "
-  read PASSWORD
-  stty echo
-  echo
-
+  
   mkdir -p ${APPD_TEMP_DIR}
 
-  if [ "$USER_NAME" != "" ] && [ "$PASSWORD" != "" ];
+  #Check for username and password
+  if [ "$MYUSERNAME" != "" ] && [ "$MYPASSWORD" != "" ];
   then
     wget --quiet \
          --save-cookies \
          ${APPD_TEMP_DIR}/cookies.txt \
-         --post-data "username=$USER_NAME&password=$PASSWORD" \
+         --post-data "username=$MYUSERNAME&password=$MYPASSWORD" \
          --no-check-certificate \
          -O ${APPD_TEMP_DIR}/index.html \
-         ${APPD_LOGIN_URL} 
-
+         ${APPD_LOGIN_URL}         
+    
     SSO_SESSIONID=`grep "sso-sessionid" ${APPD_TEMP_DIR}/cookies.txt`
     if [ ! "$SSO_SESSIONID" ]; then
       echo "Incorrect Login/Password"
